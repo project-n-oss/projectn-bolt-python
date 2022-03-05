@@ -58,7 +58,7 @@ class Session(_Session):
                 scheme, _, _, _, _ = urlsplit(service_url)
                 host = self._select_bolt_endpoint(prepared_request.method)
                 _, _, path, query, fragment = urlsplit(prepared_request.url)
-                prepared_request.url = urlunsplit((scheme, host, path, query, fragment))
+                prepared_request.url = urlunsplit(("http", host, path, query, fragment))
 
                 # Sign a get-caller-identity request
                 request = _AWSRequest(
