@@ -127,11 +127,11 @@ class Session(_Session):
         for endpoints in preferred_order:
             if self._bolt_endpoints[endpoints]:
                 # use random choice for load balancing
-                return choice(self._bolt_endpoints[endpoints])
+                return choice(self._bolt_endpoints[endpoints])+":9000"
         # if we reach this point, no endpoints are available
         raise UnknownEndpointError(service_name='bolt', region_name=self._get_region())
 
-    def _default_get(url):
+    def _default_get(self, url):
         try:
             http = urllib3.PoolManager(timeout=3.0)
             resp = http.request('GET', url, retries=2)
