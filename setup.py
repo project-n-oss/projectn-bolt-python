@@ -10,10 +10,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='bolt-sdk',
+    name='granica-sdk',
     packages=setuptools.find_packages(),
-    version='2.1.5',
-    description='Bolt Python SDK',
+    version='2.1.8',
+    description='Granica Python SDK',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Project N',
