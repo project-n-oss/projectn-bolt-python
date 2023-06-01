@@ -39,7 +39,9 @@ class Session(_Session):
                 region = get_region()
             except Exception as e:
                 pass
-        custom_domain = _environ.get('BOLT_CUSTOM_DOMAIN')
+        custom_domain = _environ.get('GRANICA_CUSTOM_DOMAIN')
+        if custom_domain is None:
+            custom_domain = _environ.get('BOLT_CUSTOM_DOMAIN')
         service_url = _environ.get('BOLT_URL')
         bolt_hostname = _environ.get('BOLT_HOSTNAME')
         hostname = None
@@ -52,12 +54,12 @@ class Session(_Session):
             scheme, service_url, _, _, _ = urlsplit(service_url)
             if "{region}" in service_url:
                 if region is None:
-                    raise ValueError(f'Bolt URL {service_url} requires region to be specified')
+                    raise ValueError(f'Granica URL {service_url} requires region to be specified')
                 service_url = service_url.replace('{region}', region)
         else:
             # must define either `custom_domain` or `url`
             raise ValueError(
-                'Bolt settings could not be found.\nPlease expose 1. BOLT_URL or 2. BOLT_CUSTOM_DOMAIN')
+                'Granica settings could not be found.\nPlease expose GRANICA_CUSTOM_DOMAIN')
 
         az_id = None
         try:
