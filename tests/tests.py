@@ -1,4 +1,4 @@
-import bolt as bolt3
+import granica as bolt3
 import boto3
 import time 
 
