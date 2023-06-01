@@ -147,7 +147,7 @@ class BoltRouter:
 
     Sends S3 requests to an alternative Bolt URL based on configuration.
 
-    To set a Bolt S3 proxy URL, run `aws [--profile PROFILE] configure set bolt.url http://localhost:9000`.
+    To set a Bolt S3 proxy URL, run `aws [--profile PROFILE] configure set granica.url http://localhost:9000`.
     """
 
     # const ordering to use when selecting endpoints
