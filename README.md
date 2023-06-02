@@ -1,6 +1,6 @@
 # Granica SDK
 
-This SDK provides an authentication solution for programatically interacting with Granica. It wraps the boto3 interface so project wide integration is as easy as refactoring `import boto3` to `import bolt as boto3`.
+This SDK provides an authentication solution for programatically interacting with Granica. It wraps the boto3 interface so project wide integration is as easy as refactoring `import boto3` to `import granica as boto3`.
 
 The package affects the signing and routing protocol of the boto3 S3 client, therefore any non S3 clients created through this SDK will be un-affected by the wrapper.
 
@@ -40,6 +40,16 @@ Import the default logger and set its level to DEBUG
 
 `logging.getLogger().setLevel(logging.DEBUG)`
 
+## Example S3 GetObject
+
+```python
+import granica as boto3
+
+s3_client = boto3.client('s3')
+response = s3_client.get_object(Bucket='MyBucket', Key='MyKey.csv')
+obj = response['Body'].read()
+
+```
 
 ## Tests
 Basic integration tests are provided for the modified Session/Client interfaces. They must be run in an environment with a properly configured Granica deployment accessible.
