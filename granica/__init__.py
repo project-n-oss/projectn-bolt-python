@@ -33,7 +33,7 @@ class Session(_Session):
         super(Session, self).__init__()
 
         # Load all of the possibly configuration settings
-        region = _environ.get('BOLT_REGION')
+        region = _environ.get('GRANICA_REGION')
         if region is None:
             try:
                 region = get_region()
@@ -41,9 +41,9 @@ class Session(_Session):
                 pass
         custom_domain = _environ.get('GRANICA_CUSTOM_DOMAIN')
         if custom_domain is None:
-            custom_domain = _environ.get('BOLT_CUSTOM_DOMAIN')
-        service_url = _environ.get('BOLT_URL')
-        bolt_hostname = _environ.get('BOLT_HOSTNAME')
+            custom_domain = _environ.get('GRANICA_CUSTOM_DOMAIN')
+        service_url = _environ.get('GRANICA_URL')
+        bolt_hostname = _environ.get('GRANICA_HOSTNAME')
         hostname = None
 
         if custom_domain is not None and region is not None:
