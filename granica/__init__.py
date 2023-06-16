@@ -41,7 +41,7 @@ class Session(_Session):
                 pass
         custom_domain = _environ.get('GRANICA_CUSTOM_DOMAIN')
         if custom_domain is None:
-            custom_domain = _environ.get('GRANICA_CUSTOM_DOMAIN')
+            custom_domain = _environ.get('BOLT_CUSTOM_DOMAIN')
         service_url = _environ.get('GRANICA_URL')
         bolt_hostname = _environ.get('GRANICA_HOSTNAME')
         hostname = None
