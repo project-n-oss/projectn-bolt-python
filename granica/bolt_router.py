@@ -265,6 +265,8 @@ class BoltRouter:
             for _ in range(4)
         )
 
+        self.single_endpoint_mode = False
+
         if update_interval > 0:
 
             @async_function
@@ -279,6 +281,7 @@ class BoltRouter:
 
     def send(self, *args, **kwargs):
         # Dispatches to the configured Bolt scheme and host.
+        print("SINGLE ENDPOINT MODE: {}".format(self.single_endpoint_mode))
         prepared_request = kwargs["request"]
         incoming_request = copy.deepcopy(prepared_request)
         _, _, path, query, fragment = urlsplit(prepared_request.url)
