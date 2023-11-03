@@ -35,7 +35,7 @@ class Session(Boto3Session):
                     region = get_region()
                 except Exception as e:
                     print(
-                        "BOLT_REGION environment variable is not set, and could not be automatically determined."
+                        "GRANICA_REGION, BOLT_REGION environment variables are not set, and could not be fetched from ec2 metadata api."
                     )
                     sys.exit(1)
         custom_domain = environ.get("GRANICA_CUSTOM_DOMAIN")
