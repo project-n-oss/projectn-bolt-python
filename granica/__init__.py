@@ -12,12 +12,11 @@
 import sys
 from os import environ
 from urllib.parse import urlsplit
-from urllib.parse import urlunsplit
 
 from boto3 import Session as Boto3Session
 from botocore.config import Config as BotoCoreConfig
 
-from .bolt_router import BoltRouter, get_region, get_availability_zone_id
+from .bolt_router import BoltRouter, get_availability_zone_id, get_region
 
 BOLT_ENDPOINT_UPDATE_INTERVAL = 10
 
