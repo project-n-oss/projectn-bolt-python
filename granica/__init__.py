@@ -26,7 +26,15 @@ class Session(Boto3Session):
     def __init__(self):
         super(Session, self).__init__()
 
-        # Load all of the possibly configuration settings
+        custom_domain = environ.get("GRANICA_CUSTOM_DOMAIN")
+        if custom_domain is None:
+            custom_domain = environ.get("BOLT_CUSTOM_DOMAIN")
+            if custom_domain is None:
+                print(
+                    "One of GRANICA_CUSTOM_DOMAIN, BOLT_CUSTOM_DOMAIN environment variables must be set."
+                )
+                sys.exit(1)
+
         region = environ.get("GRANICA_REGION")
         if region is None:
             region = environ.get("BOLT_REGION")
@@ -38,9 +46,7 @@ class Session(Boto3Session):
                         "GRANICA_REGION, BOLT_REGION environment variables are not set, and could not be fetched from ec2 metadata api."
                     )
                     sys.exit(1)
-        custom_domain = environ.get("GRANICA_CUSTOM_DOMAIN")
-        if custom_domain is None:
-            custom_domain = environ.get("BOLT_CUSTOM_DOMAIN")
+
         service_url = environ.get("BOLT_URL")
         hostname = None
 
