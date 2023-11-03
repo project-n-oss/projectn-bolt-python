@@ -285,7 +285,11 @@ class BoltRouter:
         prepared_request = kwargs["request"]
         incoming_request = copy.deepcopy(prepared_request)
         _, _, path, query, fragment = urlsplit(prepared_request.url)
+        print("selecting endpoint")
         host = self._select_endpoint(prepared_request.method)
+        print("selected endpoint")
+        print(host)
+        print(host == self.crunch_endpoint)
         if self._scheme == "http":
             host = host + ":9000"
 
