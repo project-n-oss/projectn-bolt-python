@@ -9,7 +9,6 @@
 # ANY KIND, either express or implied. See the License for the specific
 # language governing permissions and limitations under the License.
 
-import sys
 from os import environ
 from urllib.parse import urlsplit
 
@@ -30,10 +29,9 @@ class Session(Boto3Session):
         if custom_domain is None:
             custom_domain = environ.get("BOLT_CUSTOM_DOMAIN")
             if custom_domain is None:
-                print(
+                raise ValueError(
                     "One of GRANICA_CUSTOM_DOMAIN, BOLT_CUSTOM_DOMAIN environment variables must be set."
                 )
-                sys.exit(1)
 
         region = environ.get("GRANICA_REGION")
         if region is None:
@@ -42,10 +40,9 @@ class Session(Boto3Session):
                 try:
                     region = get_region()
                 except Exception as e:
-                    print(
+                    raise ValueError(
                         "GRANICA_REGION, BOLT_REGION environment variables are not set, and could not be fetched from ec2 metadata api."
                     )
-                    sys.exit(1)
 
         service_url = environ.get("BOLT_URL")
         hostname = None
