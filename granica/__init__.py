@@ -22,7 +22,7 @@ BOLT_ENDPOINT_UPDATE_INTERVAL = 10
 
 # Override Session Class
 class Session(Boto3Session):
-    def __init__(self):
+    def __init__(self, single_endpoint_mode=False):
         super(Session, self).__init__()
 
         custom_domain = environ.get("GRANICA_CUSTOM_DOMAIN")
@@ -90,6 +90,20 @@ class Session(Boto3Session):
     def client(self, *args, **kwargs):
         if kwargs.get("service_name") == "s3" or "s3" in args:
             kwargs["config"] = self._merge_bolt_config(kwargs.get("config"))
+            single_endpoint_mode = kwargs.get("single_endpoint_mode", False)
+            self.bolt_router.single_endpoint_mode = single_endpoint_mode
+
+            if single_endpoint_mode:
+                if not kwargs.get("crunch_endpoint", False):
+                    raise ValueError(
+                        "single_endpoint_mode is True but crunch_endpoint is not provided"
+                    )
+                else:
+                    self.bolt_router.crunch_endpoint = kwargs.get("crunch_endpoint")
+
+            kwargs.pop("single_endpoint_mode", None)
+            kwargs.pop("crunch_endpoint", None)
+
             return self._session.create_client(*args, **kwargs)
         else:
             return self._session.create_client(*args, **kwargs)

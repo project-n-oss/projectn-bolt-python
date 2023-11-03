@@ -265,6 +265,9 @@ class BoltRouter:
             for _ in range(4)
         )
 
+        self.single_endpoint_mode = False
+        self.crunch_endpoint = None
+
         if update_interval > 0:
 
             @async_function
@@ -354,6 +357,9 @@ class BoltRouter:
             raise e
 
     def _select_endpoint(self, method):
+        if self.single_endpoint_mode:
+            return self.crunch_endpoint
+
         preferred_order = (
             self.PREFERRED_READ_ENDPOINT_ORDER
             if method in {"GET", "HEAD"}
