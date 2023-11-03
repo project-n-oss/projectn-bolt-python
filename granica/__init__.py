@@ -27,15 +27,17 @@ class Session(Boto3Session):
         super(Session, self).__init__()
 
         # Load all of the possibly configuration settings
-        region = environ.get("BOLT_REGION")
+        region = environ.get("GRANICA_REGION")
         if region is None:
-            try:
-                region = get_region()
-            except Exception as e:
-                print(
-                    "BOLT_REGION environment variable is not set, and could not be automatically determined."
-                )
-                sys.exit(1)
+            region = environ.get("BOLT_REGION")
+            if region is None:
+                try:
+                    region = get_region()
+                except Exception as e:
+                    print(
+                        "BOLT_REGION environment variable is not set, and could not be automatically determined."
+                    )
+                    sys.exit(1)
         custom_domain = environ.get("GRANICA_CUSTOM_DOMAIN")
         if custom_domain is None:
             custom_domain = environ.get("BOLT_CUSTOM_DOMAIN")
@@ -60,15 +62,17 @@ class Session(Boto3Session):
                 "Granica settings could not be found.\nPlease expose GRANICA_CUSTOM_DOMAIN"
             )
 
-        az_id = environ.get("BOLT_AZ_ID")
+        az_id = environ.get("GRANICA_AZ_ID")
         if az_id is None:
-            try:
-                az_id = get_availability_zone_id()
-            except Exception as e:
-                print(
-                    "BOLT_AZ_ID environment variable is not set, and could not be automatically determined."
-                )
-                pass
+            az_id = environ.get("BOLT_AZ_ID")
+            if az_id is None:
+                try:
+                    az_id = get_availability_zone_id()
+                except Exception as e:
+                    print(
+                        "BOLT_AZ_ID environment variable is not set, and could not be automatically determined."
+                    )
+                    pass
 
         self.bolt_router = BoltRouter(
             scheme=scheme,
