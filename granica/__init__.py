@@ -35,7 +35,7 @@ class Session(Boto3Session):
                 print(
                     "BOLT_REGION environment variable is not set, and could not be automatically determined."
                 )
-                pass
+                sys.exit(1)
         custom_domain = environ.get("GRANICA_CUSTOM_DOMAIN")
         if custom_domain is None:
             custom_domain = environ.get("BOLT_CUSTOM_DOMAIN")
