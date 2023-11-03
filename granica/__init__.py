@@ -91,6 +91,7 @@ class Session(Boto3Session):
         kwargs.get("single_endpoint_mode")
         print("single endpoint mode:")
         print(kwargs.get("single_endpoint_mode"))
+        kwargs.pop("single_endpoint_mode")
         if kwargs.get("service_name") == "s3" or "s3" in args:
             kwargs["config"] = self._merge_bolt_config(kwargs.get("config"))
             return self._session.create_client(*args, **kwargs)
