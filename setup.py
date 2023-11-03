@@ -25,5 +25,5 @@ setup(
         "Topic :: Software Development :: Libraries",
     ],
     python_requires=python_requires,
-    url="https://gitlab.com/projectn-oss/projectn-bolt-python",
+    url="https://github.com/project-n-oss/projectn-bolt-python",
 )
