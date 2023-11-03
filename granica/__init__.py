@@ -94,6 +94,14 @@ class Session(Boto3Session):
             kwargs.pop("single_endpoint_mode", None)
             self.bolt_router.single_endpoint_mode = single_endpoint_mode
 
+            if single_endpoint_mode:
+                if kwargs.get("crunch_endpoint", False):
+                    raise ValueError(
+                        "single_endpoint_mode is True but crunch_endpoint is not provided"
+                    )
+                else:
+                    self.bolt_router.crunch_endpoint = kwargs.get("crunch_endpoint")
+
             return self._session.create_client(*args, **kwargs)
         else:
             return self._session.create_client(*args, **kwargs)

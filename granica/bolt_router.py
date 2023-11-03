@@ -266,6 +266,7 @@ class BoltRouter:
         )
 
         self.single_endpoint_mode = False
+        self.crunch_endpoint = None
 
         if update_interval > 0:
 
@@ -281,7 +282,6 @@ class BoltRouter:
 
     def send(self, *args, **kwargs):
         # Dispatches to the configured Bolt scheme and host.
-        print("SINGLE ENDPOINT MODE: {}".format(self.single_endpoint_mode))
         prepared_request = kwargs["request"]
         incoming_request = copy.deepcopy(prepared_request)
         _, _, path, query, fragment = urlsplit(prepared_request.url)
@@ -357,6 +357,9 @@ class BoltRouter:
             raise e
 
     def _select_endpoint(self, method):
+        if self.single_endpoint_mode:
+            return self.crunch_endpoint
+
         preferred_order = (
             self.PREFERRED_READ_ENDPOINT_ORDER
             if method in {"GET", "HEAD"}
