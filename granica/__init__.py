@@ -91,7 +91,6 @@ class Session(Boto3Session):
         if kwargs.get("service_name") == "s3" or "s3" in args:
             kwargs["config"] = self._merge_bolt_config(kwargs.get("config"))
             single_endpoint_mode = kwargs.get("single_endpoint_mode", False)
-            kwargs.pop("single_endpoint_mode", None)
             self.bolt_router.single_endpoint_mode = single_endpoint_mode
 
             if single_endpoint_mode:
@@ -101,6 +100,9 @@ class Session(Boto3Session):
                     )
                 else:
                     self.bolt_router.crunch_endpoint = kwargs.get("crunch_endpoint")
+
+            kwargs.pop("single_endpoint_mode", None)
+            kwargs.pop("crunch_endpoint", None)
 
             return self._session.create_client(*args, **kwargs)
         else:
