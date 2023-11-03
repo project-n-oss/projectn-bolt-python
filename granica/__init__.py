@@ -41,7 +41,7 @@ class Session(Boto3Session):
                     region = get_region()
                 except Exception as e:
                     raise ValueError(
-                        "GRANICA_REGION, BOLT_REGION environment variables are not set, and could not be fetched from ec2 metadata api."
+                        "GRANICA_REGION and BOLT_REGION environment variables are not set; region could not be fetched from ec2 metadata api."
                     )
 
         service_url = environ.get("BOLT_URL")
