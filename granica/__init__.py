@@ -22,7 +22,7 @@ BOLT_ENDPOINT_UPDATE_INTERVAL = 10
 
 # Override Session Class
 class Session(Boto3Session):
-    def __init__(self):
+    def __init__(self, single_endpoint_mode=False):
         super(Session, self).__init__()
 
         custom_domain = environ.get("GRANICA_CUSTOM_DOMAIN")
