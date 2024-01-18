@@ -18,8 +18,9 @@ from botocore.awsrequest import AWSRequest
 from botocore.exceptions import NoCredentialsError, UnknownEndpointError
 from botocore.httpsession import URLLib3Session
 from botocore.session import get_session
-from urllib3 import PoolManager
+from urllib3 import PoolManager, Timeout
 from urllib3.util.retry import Retry
+
 
 EC2_INSTANCE_METADATA_API_BASE_URL = "http://169.254.169.254"
 
@@ -27,7 +28,8 @@ http_pool = PoolManager(
     retries=Retry(
         total=5,  # Total number of retries
         backoff_factor=0.1,  # Time to sleep between retries (0.1s, 0.2s, 0.4s, ...)
-    )
+    ),
+    timeout=Timeout(total=1.0)
 )
 
 
